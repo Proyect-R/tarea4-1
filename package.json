@@ -14,10 +14,10 @@
   "author": "Rubén Hidalgo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RafaeldelRio/daweb/issues"
+    "url": "https://github.com/Proyect-R/tarea4-1/issues"
   },
   "homepage": "https://github.com/Proyect-R/tarea4-1#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.21.1"
   }
 }
