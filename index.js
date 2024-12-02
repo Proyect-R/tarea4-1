@@ -59,7 +59,7 @@ app.post("/concesionarios", (request, response) => {
 app.get("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
   const result = concesionarios[id];
-  response.json({ result });
+  response.json({ message: "ok" });
 });
 
 // Actualizar un solo concesionario
@@ -72,7 +72,9 @@ app.put("/concesionarios/:id", (request, response) => {
 // Borrar un concesionario
 app.delete("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
-  concesionarios = concesionarios.filter((item) => concesionarios.indexOf(item) !== id);
+  concesionarios = concesionarios.filter(
+    (item) => concesionarios.indexOf(item) !== id
+  );
 
   response.json({ message: "ok" });
 });
@@ -118,10 +120,11 @@ app.delete("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const cocheId = request.params.cocheId;
   const concesionario = concesionarios[id];
   if (concesionario) {
-    concesionario.listaCoches = concesionario.listaCoches.filter((item, index) => index !== parseInt(cocheId));
-    response.json({ message: "Coche eliminado correctamente" });
+    concesionario.listaCoches = concesionario.listaCoches.filter(
+      (item, index) => index !== parseInt(cocheId)
+    );
+    response.json({ message: "ok" });
   } else {
-    response.status(404).json({ message: "Concesionario no encontrado" });
+    response.status(404).json({ message: "ok" });
   }
 });
-
