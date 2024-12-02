@@ -82,9 +82,8 @@ app.delete("/concesionarios/:id", (request, response) => {
 // Devuelve todos los coches del concesionario pasado por id (solo los coches)
 app.get("/concesionarios/:id/coches", (request, response) => {
   const id = request.params.id;
-  const concesionarios = concesionarios[id];
-  response.json(concesionarios.listaCoches);
-  response.json(concesionarios.coches);
+  const concesionario = concesionarios[id];
+  response.json(concesionario.listaCoches);
 });
 
 // Añade un nuevo coche al concesionario pasado por id.
@@ -99,8 +98,7 @@ app.post("/concesionarios/:id/coches", (request, response) => {
 app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const id = request.params.id;
   const cocheId = request.params.cocheId;
-  const concesionario = concesionarios[id];
-  const result = concesionario.listaCoches[cocheId];
+  const result = concesionarios[id].listaCoches[cocheId];
   response.json({ result });
 });
 
@@ -108,9 +106,7 @@ app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
 app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const id = request.params.id;
   const cocheId = request.params.cocheId;
-  const concesionario = concesionarios[id];
-  const coche = concesionario.listaCoches[cocheId];
-  concesionario.listaCoches[cocheId] = request.body;
+  concesionarios[id].listaCoches[cocheId] = request.body;
   response.json({ message: "ok" });
 });
 
@@ -118,13 +114,7 @@ app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
 app.delete("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const id = request.params.id;
   const cocheId = request.params.cocheId;
-  const concesionario = concesionarios[id];
-  if (concesionario) {
-    concesionario.listaCoches = concesionario.listaCoches.filter(
-      (item, index) => index !== parseInt(cocheId)
-    );
+  concesionarios[id].listaCoches = concesionarios[id].listaCoches.filter((item, index) => index !== cocheId);
     response.json({ message: "ok" });
-  } else {
-    response.status(404).json({ message: "ok" });
-  }
+  
 });
