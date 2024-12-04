@@ -75,11 +75,11 @@ app.put("/concesionarios/:id", (request, response) => {
 // Borrar un concesionario
 app.delete("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
-  const concesionarioEliminado = concesionarios[id];
-  concesionarios = concesionarios.filter(
-    (item) => concesionarios.indexOf(item) !== id
-  );
-  response.json({ message: "borrado ok ", concesionarios });
+  concesionarios.splice(id, 1);
+  response.json({
+    message: "ok",
+    concesionarios: concesionarios,
+  });
 });
 
 // Devuelve todos los coches del concesionario pasado por id (solo los coches)
