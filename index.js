@@ -52,7 +52,7 @@ app.get("/concesionarios", (request, response) => {
 // Añadir un nuevo concesionario
 app.post("/concesionarios", (request, response) => {
   concesionarios.push(request.body);
-  response.json({ message: "ok" });
+  response.json({ message: "ok", concesionarios });
 });
 
 // Obtener un solo concesionario
@@ -66,17 +66,20 @@ app.get("/concesionarios/:id", (request, response) => {
 app.put("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
   concesionarios[id] = request.body;
-  response.json({ message: "ok" });
+  response.json({
+    message: "Actualizado ok ",
+    concesionarios: concesionarios[id],
+  });
 });
 
 // Borrar un concesionario
 app.delete("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
+  const concesionarioEliminado = concesionarios[id];
   concesionarios = concesionarios.filter(
     (item) => concesionarios.indexOf(item) !== id
   );
-
-  response.json({ message: "ok" });
+  response.json({ message: "borrado ok ", concesionarios });
 });
 
 // Devuelve todos los coches del concesionario pasado por id (solo los coches)
@@ -89,7 +92,10 @@ app.get("/concesionarios/:id/coches", (request, response) => {
 app.post("/concesionarios/:id/coches", (request, response) => {
   const id = request.params.id;
   concesionarios[id].listaCoches.push(request.body);
-  response.json({ message: "ok" });
+  response.json({
+    message: "ok",
+    concesionarios: concesionarios[id].listaCoches,
+  });
 });
 
 // Obtiene el coche cuyo id sea cocheId, del concesionario pasado por id
@@ -105,15 +111,19 @@ app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const id = request.params.id;
   const cocheId = request.params.cocheId;
   concesionarios[id].listaCoches[cocheId] = request.body;
-  response.json({ message: "ok" });
+  response.json({
+    message: "ok",
+    concesionarios: concesionarios[id].listaCoches[cocheId],
+  });
 });
 
 // Borra el coche cuyo id sea cocheId, del concesionario pasado por id
 app.delete("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const id = request.params.id;
   const cocheId = request.params.cocheId;
-  concesionarios[id].listaCoches = concesionarios[id].listaCoches.filter(
-    (item, index) => index !== cocheId
-  );
-  response.json({ message: "ok" });
+  concesionarios[id].listaCoches.splice(cocheId, 1);
+  response.json({
+    message: "ok",
+    concesionarios: concesionarios[id].listaCoches,
+  });
 });
