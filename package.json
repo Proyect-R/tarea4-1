@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Proyect-R/tarea4-1#readme",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mongodb": "^6.12.0"
   }
 }
