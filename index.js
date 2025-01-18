@@ -132,13 +132,29 @@ app.put("/concesionarios/:id", async (request, response) => {
 
 
 // Borrar un concesionario
-app.delete("/concesionarios/:id", (request, response) => {
-  const id = request.params.id;
-  concesionarios.splice(id, 1);
-  response.json({
-    message: "ok",
-    concesionarios: concesionarios,
-  });
+app.delete("/concesionarios/:id", async(request, response) => {
+  const { id } = request.params; // Obtener el id desde los parámetros de la URL
+  try {
+    await cliente.connect(); // Conectar al servidor de MongoDB
+    const database = cliente.db("concesionarios"); // Nombre de la base de datos
+    const concesionariosCollection = database.collection("concesionarios"); // Nombre de la colección
+
+    // Buscar el concesionario por su _id
+    const concesionario = await concesionariosCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (concesionario) {
+      response.json({ concesionario }); // Enviar el concesionario encontrado
+    } else {
+      response.status(404).json({ error: "Concesionario no encontrado" }); // Si no se encuentra, enviar error 404
+    }
+  } catch (err) {
+    console.error("Error al obtener el concesionario:", err);
+    response.status(500).json({ error: "Error al obtener el concesionario" }); // Enviar error si algo falla
+  } finally {
+    await cliente.close(); // Cerrar la conexión
+  }
 });
 
 // Devuelve todos los coches del concesionario pasado por id (solo los coches)
