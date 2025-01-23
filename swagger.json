@@ -1,0 +1,144 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "info": {
+      "title": "Concesionarios API.",
+      "version": " 1.0.0"
+    },
+    "definitions": {
+      "listaCoches":{
+      "type": "array"
+      },
+      "Coche": {
+        "type": "object",
+        "properties": {
+          "modelo": {
+            "type": "string"
+          },
+          "cv": {
+            "type": "string"
+          },
+          "precio": {
+            "type": "string"
+          }
+        },
+        "required": ["modelo", "cv", "precio"]
+      }
+    },
+    "paths": {
+      "concesionarios/{id}/listaCoches": {
+        "get": {
+          "summary": "Fetch listaCoches",
+          "operationId": "getListaCoches",
+          "responses": {
+            "200": {
+              "description": "Lista de coches de un concesionario.",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/listaCoches"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create coches",
+          "operationId": "createCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/Coche"
+                },
+                "example": {
+                  "marca": "Nissan",
+                  "modelo": "Skyline R34"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        }
+      },
+      "/coches/{id}": {
+        "get": {
+          "summary": "Get a coche by id.",
+          "operationId": "getCoche",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch coches.",
+              "schema": {
+                "$ref": "#/definitions/Coche"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Coche.",
+          "operationId": "updateCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/Coche"
+                },
+                "example": {
+                  "marca": "Nissan",
+                  "modelo": "Skyline R34"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Coche.",
+          "operationId": "deleteCoches",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        }
+      }
+    }
+  }
+  

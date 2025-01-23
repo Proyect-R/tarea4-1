@@ -2,13 +2,15 @@
 // Concretamente el framework express.
 const express = require("express");
 const cliente = require("./utils");
+// Swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 // Importamos el objeto id para las peticiones por id
 const { ObjectId } = require("mongodb");
 // Inicializamos la aplicación
 const app = express();
-
-// Indicamos que la aplicación puede recibir JSON (API Rest)
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Indicamos el puerto en el que vamos a desplegar la aplicación
 const port = process.env.DB_PORT;
