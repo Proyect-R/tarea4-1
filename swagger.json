@@ -1,213 +1,144 @@
 {
-  "swagger": "2.0",
-  "basePath": "/",
-  "info": {
-    "title": "Concesionarios API.",
-    "version": " 1.0.0"
-  },
-  "definitions": {
-    "Concesionario": {
-      "type": "object",
-      "properties": {
-        "nombre": {
-          "type": "string"
-        },
-        "direccion": {
-          "type": "string"
-        },
-        "listaCoches": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Coche"
-          }
-        }
-      },
-      "required": [
-        "nombre",
-        "direccion",
-        "listaCoches"
-      ]
+    "swagger": "2.0",
+    "basePath": "/",
+    "info": {
+      "title": "Concesionarios API.",
+      "version": " 1.0.0"
     },
-    "Coche": {
-      "type": "object",
-      "properties": {
-        "modelo": {
-          "type": "string"
-        },
-        "cv": {
-          "type": "string"
-        },
-        "precio": {
-          "type": "string"
-        }
+    "definitions": {
+      "listaCoches":{
+      "type": "array"
       },
-      "required": [
-        "modelo",
-        "cv",
-        "precio"
-      ]
-    }
-  },
-  "paths": {
-    "/concesionarios": {
-      "get": {
-        "summary": "Fetch Concesionarios",
-        "operationId": "getConcesionarios",
-        "responses": {
-          "200": {
-            "description": "Lista de concesionarios.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Concesionario"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create concesionario",
-        "operationId": "createConcesionario",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "concesionario",
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/Concesionario"
-              },
-              "example": {
-                "nombre": "Pepe Car",
-                "direccion": "C/ Abichuela nº3",
-                "listaCoches": "[]"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "{message: 'Concesionario agregado'}"
-          }
-        }
-      }
-    },
-    "/concesionarios/{id}": {
-      "get": {
-        "summary": "get concesionario by id",
-        "operationId": "getConcesionario",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Listar un concesionario.",
-            "schema": {
-              "$ref": "#/definitions/Concesionario"
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update Concesionario.",
-        "operationId": "updateCoche",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
+      "Coche": {
+        "type": "object",
+        "properties": {
+          "modelo": {
             "type": "string"
           },
-          {
-            "in": "body",
-            "name": "concesionario",
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/Concesionario"
-              },
-              "example": {
-                "nombre": "Pepe Car",
-                "direccion": "C/ Abichuela nº3",
-                "listaCoches": "[]"
+          "cv": {
+            "type": "string"
+          },
+          "precio": {
+            "type": "string"
+          }
+        },
+        "required": ["modelo", "cv", "precio"]
+      }
+    },
+    "paths": {
+      "concesionarios/{id}/listaCoches": {
+        "get": {
+          "summary": "Fetch listaCoches",
+          "operationId": "getListaCoches",
+          "responses": {
+            "200": {
+              "description": "Lista de coches de un concesionario.",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/listaCoches"
+                }
               }
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "{message: 'Concesionario actualizado'}"
+        },
+        "post": {
+          "summary": "Create coches",
+          "operationId": "createCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/Coche"
+                },
+                "example": {
+                  "marca": "Nissan",
+                  "modelo": "Skyline R34"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
           }
         }
       },
-      "delete": {
-        "summary": "Delete Concesionario.",
-        "operationId": "deleteConcesionario",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "{ concesionario }"
-          }
-        }
-      }
-    },
-    "/concesionarios/{id}/listaCoches": {
-      "get": {
-        "summary": "Fetch listaCoches",
-        "operationId": "getListaCoches",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Listar la listaCoches de un concersionario.",
-            "schema": {
-              "items": {
+      "/coches/{id}": {
+        "get": {
+          "summary": "Get a coche by id.",
+          "operationId": "getCoche",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch coches.",
+              "schema": {
                 "$ref": "#/definitions/Coche"
-              },
-              "example": [
-                {
-                  "modelo": "Renaul Megane",
-                  "cv": "130",
-                  "precio": "23.000"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Coche.",
+          "operationId": "updateCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/Coche"
                 },
-                {
-                  "modelo": "Seat Altea",
-                  "cv": "130",
-                  "precio": "23.000"
+                "example": {
+                  "marca": "Nissan",
+                  "modelo": "Skyline R34"
                 }
-              ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Coche.",
+          "operationId": "deleteCoches",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
             }
           }
         }
       }
     }
   }
-}
+  
