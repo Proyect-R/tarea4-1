@@ -1,144 +1,372 @@
 {
-    "swagger": "2.0",
-    "basePath": "/",
-    "info": {
-      "title": "Concesionarios API.",
-      "version": " 1.0.0"
-    },
-    "definitions": {
-      "listaCoches":{
-      "type": "array"
+  "swagger": "2.0",
+  "basePath": "/",
+  "info": {
+    "title": "Concesionarios API.",
+    "version": " 1.0.0"
+  },
+  "definitions": {
+    "Concesionario": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string"
+        },
+        "direccion": {
+          "type": "string"
+        },
+        "listaCoches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coche"
+          }
+        }
       },
-      "Coche": {
-        "type": "object",
-        "properties": {
-          "modelo": {
-            "type": "string"
-          },
-          "cv": {
-            "type": "string"
-          },
-          "precio": {
-            "type": "string"
-          }
-        },
-        "required": ["modelo", "cv", "precio"]
-      }
+      "required": [
+        "nombre",
+        "direccion",
+        "listaCoches"
+      ]
     },
-    "paths": {
-      "concesionarios/{id}/listaCoches": {
-        "get": {
-          "summary": "Fetch listaCoches",
-          "operationId": "getListaCoches",
-          "responses": {
-            "200": {
-              "description": "Lista de coches de un concesionario.",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/listaCoches"
-                }
-              }
-            }
-          }
+    "Coche": {
+      "type": "object",
+      "properties": {
+        "modelo": {
+          "type": "string"
         },
-        "post": {
-          "summary": "Create coches",
-          "operationId": "createCoche",
-          "consumes": ["application/json"],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "coche",
-              "schema": {
-                "items": {
-                  "$ref": "#/definitions/Coche"
-                },
-                "example": {
-                  "marca": "Nissan",
-                  "modelo": "Skyline R34"
-                }
+        "cv": {
+          "type": "string"
+        },
+        "precio": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "modelo",
+        "cv",
+        "precio"
+      ]
+    }
+  },
+  "paths": {
+    "/concesionarios": {
+      "get": {
+        "summary": "Get Concesionarios",
+        "operationId": "getConcesionarios",
+        "responses": {
+          "200": {
+            "description": "Lista de concesionarios.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Concesionario"
               }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "{message: 'ok'}"
             }
           }
         }
       },
-      "/coches/{id}": {
-        "get": {
-          "summary": "Get a coche by id.",
-          "operationId": "getCoche",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "type": "string"
+      "post": {
+        "summary": "Create Concesionario",
+        "operationId": "createConcesionario",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "concesionario",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Concesionario"
+              },
+              "example": {
+                "nombre": "Pepe Car",
+                "direccion": "C/ Abichuela nº3",
+                "listaCoches": "[]"
+              }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Fetch coches.",
-              "schema": {
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Concesionario agregado'}"
+          }
+        }
+      }
+    },
+    "/concesionarios/{id}": {
+      "get": {
+        "summary": "Get Concesionario",
+        "operationId": "getConcesionario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listar un concesionario.",
+            "schema": {
+              "$ref": "#/definitions/Concesionario"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Concesionario.",
+        "operationId": "updateCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "concesionario",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Concesionario"
+              },
+              "example": {
+                "nombre": "Pepe Car",
+                "direccion": "C/ Abichuela nº3",
+                "listaCoches": "[]"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Concesionario actualizado'}"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Concesionario.",
+        "operationId": "deleteConcesionario",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{ concesionario }"
+          }
+        }
+      }
+    },
+    "/concesionarios/{id}/coches": {
+      "get": {
+        "summary": "Get Concesionario.listaCoches",
+        "operationId": "getListaCoches",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listar la listaCoches de un concersionario.",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": [
+                {
+                  "modelo": "Renaul Megane",
+                  "cv": "130",
+                  "precio": "23.000"
+                },
+                {
+                  "modelo": "Seat Altea",
+                  "cv": "130",
+                  "precio": "23.000"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Concesionario.listaCoches.coche",
+        "operationId": "put coche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "coche",
+            "type":"object",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": {
+                "modelo": "Toyota Supra",
+                "cv": "110",
+                "precio": "30000"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/concesionarios/{id}/coches/{cocheId}": {
+      "get": {
+        "summary": "Get Concesionario.listaCoches.coche",
+        "operationId": "getCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista un coche.",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": [
+                {
+                  "modelo": "Renaul Megane",
+                  "cv": "130",
+                  "precio": "23.000"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Concesionario.listaCoches.coche",
+        "operationId": "putCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "coche",
+            "type":"object",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": {
+                "modelo": "Toyota Supra",
+                "cv": "110",
+                "precio": "30000"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Modifica un coche",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": [
+                {
+                  "modelo": "Renaul Megane",
+                  "cv": "130",
+                  "precio": "23.000"
+                },
+                {
+                  "modelo": "Seat Altea",
+                  "cv": "130",
+                  "precio": "23.000"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Concesionario.listaCoches.coche",
+        "operationId": "deleteCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Borrar coche",
+            "schema": {
+              "items": {
                 "$ref": "#/definitions/Coche"
               }
-            }
-          }
-        },
-        "put": {
-          "summary": "Update Coche.",
-          "operationId": "updateCoche",
-          "consumes": ["application/json"],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "in": "body",
-              "name": "coche",
-              "schema": {
-                "items": {
-                  "$ref": "#/definitions/Coche"
-                },
-                "example": {
-                  "marca": "Nissan",
-                  "modelo": "Skyline R34"
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "{message: 'ok'}"
-            }
-          }
-        },
-        "delete": {
-          "summary": "Delete Coche.",
-          "operationId": "deleteCoches",
-          "consumes": ["application/json"],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "{message: 'ok'}"
             }
           }
         }
       }
     }
   }
-  
+}
