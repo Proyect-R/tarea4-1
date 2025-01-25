@@ -32,7 +32,7 @@ app.listen(port, () => {
 });
 
 // Lista todos los concesionarios
-app.get("/concesionarios", async (request, response) => {
+app.get("/concesionarios", async (response) => {
   try {
     await cliente.connect(); // Conectar al servidor de MongoDB
     const database = cliente.db("concesionarios"); // Nombre de la base de datos
@@ -58,17 +58,9 @@ app.post("/concesionarios", async (request, response) => {
 
     // Insertar el nuevo concesionario en la base de datos
     const result = await concesionariosCollection.insertOne(nuevoConcesionario);
-
-    // Obtener el concesionario completo que fue insertado
-    const insertedConcesionario = await concesionariosCollection.findOne({
-      _id: result.insertedId,
-    });
-
     // Enviar respuesta con el mensaje de éxito y el concesionario insertado
-    response.json({
-      message: "Concesionario agregado",
-      concesionario: insertedConcesionario,
-    });
+    response.json({message: "Concesionario agregado"});
+    
   } catch (err) {
     console.error("Error al agregar el concesionario:", err);
     response.status(500).json({ error: "Error al agregar concesionario" }); // Enviar error si algo falla
@@ -345,4 +337,3 @@ app.delete("/concesionarios/:id/coches/:cocheId", async (request, response) => {
     await cliente.close();  // Cerrar la conexión
   }
 });
-
