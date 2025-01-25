@@ -51,7 +51,7 @@
   "paths": {
     "/concesionarios": {
       "get": {
-        "summary": "Fetch Concesionarios",
+        "summary": "Get Concesionarios",
         "operationId": "getConcesionarios",
         "responses": {
           "200": {
@@ -66,7 +66,7 @@
         }
       },
       "post": {
-        "summary": "Create concesionario",
+        "summary": "Create Concesionario",
         "operationId": "createConcesionario",
         "consumes": [
           "application/json"
@@ -96,7 +96,7 @@
     },
     "/concesionarios/{id}": {
       "get": {
-        "summary": "get concesionario by id",
+        "summary": "Get Concesionario",
         "operationId": "getConcesionario",
         "parameters": [
           {
@@ -172,7 +172,7 @@
     },
     "/concesionarios/{id}/coches": {
       "get": {
-        "summary": "Fetch listaCoches",
+        "summary": "Get Concesionario.listaCoches",
         "operationId": "getListaCoches",
         "consumes": [
           "application/json"
@@ -209,7 +209,7 @@
         }
       },
       "post": {
-        "summary": "crear coche en el concesionario pasado por id",
+        "summary": "Create Concesionario.listaCoches.coche",
         "operationId": "put coche",
         "consumes": [
           "application/json"
@@ -241,7 +241,7 @@
     },
     "/concesionarios/{id}/coches/{cocheId}": {
       "get": {
-        "summary": "Lista el coche por index de el concesionario pasado por id",
+        "summary": "Get Concesionario.listaCoches.coche",
         "operationId": "getCoche",
         "consumes": [
           "application/json"
@@ -272,11 +272,6 @@
                   "modelo": "Renaul Megane",
                   "cv": "130",
                   "precio": "23.000"
-                },
-                {
-                  "modelo": "Seat Altea",
-                  "cv": "130",
-                  "precio": "23.000"
                 }
               ]
             }
@@ -284,7 +279,7 @@
         }
       },
       "put": {
-        "summary": "Modificar el coche por index de el concesionario pasado por id",
+        "summary": "Update Concesionario.listaCoches.coche",
         "operationId": "putCoche",
         "consumes": [
           "application/json"
@@ -342,7 +337,7 @@
         }
       },
       "delete": {
-        "summary": "Borrar el coche por index de el concesionario pasado por id",
+        "summary": "Delete Concesionario.listaCoches.coche",
         "operationId": "deleteCoche",
         "consumes": [
           "application/json"
