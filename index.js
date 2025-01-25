@@ -32,7 +32,7 @@ app.listen(port, () => {
 });
 
 // Lista todos los concesionarios
-app.get("/concesionarios", async (response) => {
+app.get("/concesionarios", async (request, response) => {
   try {
     await cliente.connect(); // Conectar al servidor de MongoDB
     const database = cliente.db("concesionarios"); // Nombre de la base de datos
@@ -150,7 +150,7 @@ app.delete("/concesionarios/:id", async(request, response) => {
     await cliente.close(); // Cerrar la conexión
   }
 });
-
+// listaConcesionarios de un concesionario
 app.get("/concesionarios/:id/coches", async (request, response) => {
   const id = request.params.id;  // Obtener el id desde los parámetros de la URL
 

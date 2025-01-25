@@ -170,7 +170,7 @@
         }
       }
     },
-    "/concesionarios/{id}/listaCoches": {
+    "/concesionarios/{id}/coches": {
       "get": {
         "summary": "Fetch listaCoches",
         "operationId": "getListaCoches",
