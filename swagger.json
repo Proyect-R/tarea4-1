@@ -207,6 +207,170 @@
             }
           }
         }
+      },
+      "post": {
+        "summary": "crear coche en el concesionario pasado por id",
+        "operationId": "put coche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "coche",
+            "type":"object",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": {
+                "modelo": "Toyota Supra",
+                "cv": "110",
+                "precio": "30000"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/concesionarios/{id}/coches/{cocheId}": {
+      "get": {
+        "summary": "Lista el coche por index de el concesionario pasado por id",
+        "operationId": "getCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista un coche.",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": [
+                {
+                  "modelo": "Renaul Megane",
+                  "cv": "130",
+                  "precio": "23.000"
+                },
+                {
+                  "modelo": "Seat Altea",
+                  "cv": "130",
+                  "precio": "23.000"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Modificar el coche por index de el concesionario pasado por id",
+        "operationId": "putCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "coche",
+            "type":"object",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": {
+                "modelo": "Toyota Supra",
+                "cv": "110",
+                "precio": "30000"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Modifica un coche",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              },
+              "example": [
+                {
+                  "modelo": "Renaul Megane",
+                  "cv": "130",
+                  "precio": "23.000"
+                },
+                {
+                  "modelo": "Seat Altea",
+                  "cv": "130",
+                  "precio": "23.000"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Borrar el coche por index de el concesionario pasado por id",
+        "operationId": "deleteCoche",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "cocheId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Borrar coche",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Coche"
+              }
+            }
+          }
+        }
       }
     }
   }
