@@ -224,7 +224,7 @@
           {
             "in": "body",
             "name": "coche",
-            "type":"object",
+            "type": "object",
             "schema": {
               "items": {
                 "$ref": "#/definitions/Coche"
@@ -236,7 +236,12 @@
               }
             }
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "{ 'message: Coche añadido, concesionarioId: id }"   
+          }
+        }
       }
     },
     "/concesionarios/{id}/coches/{cocheId}": {
@@ -300,7 +305,7 @@
           {
             "in": "body",
             "name": "coche",
-            "type":"object",
+            "type": "object",
             "schema": {
               "items": {
                 "$ref": "#/definitions/Coche"
@@ -315,23 +320,8 @@
         ],
         "responses": {
           "200": {
-            "description": "Modifica un coche",
+            "description": "message: Coche actualizado correctamente,concesionario: concesionario.listaCoches[cocheId],",
             "schema": {
-              "items": {
-                "$ref": "#/definitions/Coche"
-              },
-              "example": [
-                {
-                  "modelo": "Renaul Megane",
-                  "cv": "130",
-                  "precio": "23.000"
-                },
-                {
-                  "modelo": "Seat Altea",
-                  "cv": "130",
-                  "precio": "23.000"
-                }
-              ]
             }
           }
         }
@@ -358,12 +348,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Borrar coche",
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/Coche"
-              }
-            }
+            "description": "message: Coche eliminado correctamente"
           }
         }
       }
